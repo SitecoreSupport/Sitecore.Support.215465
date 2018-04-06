@@ -96,9 +96,16 @@
                             return {
                                 bar: i==0,
                                 key: chartParameters.metrics[i].headerText || key,
-                                values: _(series).map(function(dataPoint) {
+                                values: _(series).map(function (dataPoint) {
+                                    //added code issue 215465
+                                    function convertDateToUTC(date) {
+                                        return new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds());
+                                    }
+                                    //added code issue 215465
                                     return {
-                                        x: new Date(dataPoint['date']),
+                                        //modified code code issue 215465
+                                        x: convertDateToUTC(new Date(dataPoint['date'])),
+                                        //modified code code issue 215465
                                         y: dataPoint[chartParameters.metrics[i].dataField],
                                         dateLabel: dataPoint['dateLabel']
                                     };
